@@ -37,3 +37,41 @@ const [,,,a,b] = numbers; // Destructuring the first three elements and the rest
 // const [first, second, ...rest] = numbers; // Destructuring the first two elements and the rest of the array
 
 console.log(a, b);
+
+
+
+/// example 
+
+var firstValue= 10; var secondValue = 20; var thirdValue = 30;
+
+// without destructuring
+// var temp = firstValue; firstValue = secondValue; secondValue = thirdValue; thirdValue = temp;
+
+[firstValue, secondValue, thirdValue] = [secondValue, thirdValue, firstValue]; // Using destructuring to swap values
+
+console.log(firstValue, secondValue, thirdValue); // Output: 20 30 10
+
+// example of destructuring in function parameters
+
+function displayUserInfo({name, age, education: {degree, university}}) {
+    console.log(`Name: ${name}, Age: ${age}, Degree: ${degree}, University: ${university}`);
+}
+
+displayUserInfo(user); // Passing the user object to the function which uses destructuring in its parameters
+
+
+// example of destructuring in function return values
+function getUserInfo() {
+    return {
+        newName: 'Jane Doe',
+        newAge: 25,
+        newEducation: {
+            newDegree: "Master's in Data Science",
+            newUniversity: "Tech University"
+        }
+    };
+}
+
+const {newName, newAge, newEducation: {newDegree, newUniversity}} = getUserInfo(); // Destructuring the returned object from the function
+
+console.log(`newName: ${newName}, newAge: ${newAge}, newDegree: ${newDegree}, newUniversity: ${newUniversity}`);
