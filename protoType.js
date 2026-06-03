@@ -35,11 +35,11 @@ function Person(name, age) {
 
     // let person = {} ;
     // let person = Object.create(personMethod) ;
-    let person = Object.create(Person.prototype) ;
+    // let person = Object.create(Person.prototype) ;
 
 
-    person.name = name ;
-    person.age = age ;
+    this.name = name ;
+    this.age = age ;
     
     // person.sleep = personMethod.sleep.bind(null, person.name) ;  
     // person.eat = personMethod.eat.bind(null, person.name) ;
@@ -54,12 +54,12 @@ function Person(name, age) {
     // person.eat = function() {
     //     console.log(`${person.name} is eating.`);
     // }
-    return person;
+    // return person;
 }
 
 
-const Hridoy  = Person('Hridoy', 25) ;
-const Shekh = Person('Shekh', 25) ;
+const Hridoy  = new Person('Hridoy', 25) ;
+const Shekh = new Person('Shekh', 25) ;
 
 // console.log(Hridoy.name, Hridoy.age); // Output: Hridoy 25
 // console.log(Shekh.name, Shekh.age); // Output: Shekh 25
@@ -79,6 +79,22 @@ let captain  = {
 }
 
 const player = Object.create(captain) ;
+
+// let persons = new Array();
+let persons = [1,2,3];
+
+
+persons.push('Hridoy');
+
+persons.map((person) => {
+    console.log(`Hello, ${person}`); ;
+}) ;
+
+persons.filter((person) => {
+    return person === 'Hridoy' ;
+}) ;
+
+console.log(persons) ;
 
 // console.log(player.name,player);
 
