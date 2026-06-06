@@ -45,3 +45,7 @@ const nameArray = ["Hridoy", "John", "Doe"] ;
 for (let name of nameArray) {
     console.log(name, nameArray.indexOf(name));
 }
+
+for (let player of person) {
+    console.log(` Player: ${player.name}, Age: ${player.age}`);
+}
