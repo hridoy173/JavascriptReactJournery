@@ -97,3 +97,7 @@ console.log(combined); // Output: [1,2,3,4,5,6,7,8,9,10]
 // map built in function in arrays
 var mapResult = combined.map( (num) => num * 2 ); // Output: [2,4,6,8,10,12,14,16,18,20]
 console.log(mapResult); // Output: [2,4,6,8,10,12,14,16,18,20]
+
+    
+var reduceResult = combined.reduce( (accumulator, currentValue,currentIndex,arr) => accumulator + currentValue, 0 ); // Output: 55
+console.log(reduceResult); // Output: 55
