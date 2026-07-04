@@ -1,63 +1,18 @@
 
-let users = [
-    { id: 1, name: "Hridoy" },
-    { id: 2, name: "Robin" }
-];
+const User = require("../models/User");
 
+// create user model method 1
+await User.create({
+    name: "Shekh Hridoy",
+    email: "smhridoy!73@gmail.com",
+    age: 30
+});
 
+// create user model method 2
+// const user = new User({
+//     name: "Jane Doe",
+//     email: "jane@mail.com",
+//     age: 25
+// });
 
-// get all users
-const getUsers = (req, res) => {
-
-    res.json({
-        message: "All Users",
-        data: users
-    });
-
-};
-
-
-// create new user
-const createUser = (req, res) => {
-
-    const user = req.body;
-    users.push(user);
-    res.status(201).json(user);
-};
-
-
-
-// update user
-const userUpdate = (req, res) => {
-
-    const id = Number(req.params.id);
-    const index = users.findIndex(user => user.id === id);
-    if (index === -1) {
-        return res.status(404).json({ message: "User Not Found" });
-    }
-    const updatedUser = { ...users[index], ...req.body };
-    users[index] = updatedUser;
-    res.json(updatedUser);
-};
-
-
-// delete user
-const userDelete = (req, res) => {
-
-    const id = Number(req.params.id);
-    const index = users.findIndex(user => user.id === id);
-    if (index === -1) {
-        return res.status(404).json({ message: "User Not Found" });
-    }
-    users.splice(index, 1);
-    res.json({ message: "User Deleted" });
-};
-
-
-
-module.exports = {
-    getUsers,
-    createUser,
-    userUpdate,
-    userDelete
-};
+// await user.save();
