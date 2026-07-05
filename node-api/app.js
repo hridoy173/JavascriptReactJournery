@@ -9,7 +9,14 @@ const app = express();
 
 app.use(express.json());
 
+// // user routes
+// const userRoutes = require("./routes/userRoutes");
+// app.use("/users", userRoutes);
+app.use("/users", require("./routes/userRoutes"));
+
+
 connectDB();
+
 
 module.exports = app;
 
@@ -21,10 +28,7 @@ module.exports = app;
 // app.use(express.json());
 
 
-// // user routes
-// // app.use("/users", require("./routes/userRoutes"));
-// const userRoutes = require("./routes/userRoutes");
-// app.use("/users", userRoutes);
+
 
 
 // //product routes
