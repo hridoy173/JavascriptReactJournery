@@ -3,6 +3,7 @@ const User = require("../models/User");
 
 // create user model method 1
 const createUser = async (req, res) => {
+
     try {
 
         const user = await User.create(req.body);
@@ -35,7 +36,10 @@ const createUser = async (req, res) => {
 //get all users
 const getUsers =  async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find()
+        .populate(1)
+        .limit(1)
+        .sort({ createdAt: -1 });
         res.json(users);
     } catch (error) {
         res.status(500).json({ message: error.message });

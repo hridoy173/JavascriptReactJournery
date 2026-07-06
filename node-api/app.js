@@ -2,21 +2,13 @@
 require("dotenv").config();
 
 const express = require("express");
-
-const connectDB = require("./config/db");
-
 const app = express();
 
 app.use(express.json());
 
-// // user routes
-// const userRoutes = require("./routes/userRoutes");
-// app.use("/users", userRoutes);
+// user routes
+
 app.use("/users", require("./routes/userRoutes"));
-
-
-connectDB();
-
 
 module.exports = app;
 
@@ -28,7 +20,8 @@ module.exports = app;
 // app.use(express.json());
 
 
-
+// const userRoutes = require("./routes/userRoutes");
+// app.use("/users", userRoutes);
 
 
 // //product routes
