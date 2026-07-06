@@ -11,7 +11,11 @@ const createUserValidation = [
 
     body("age")
         .isInt({ min: 1 })
-        .withMessage("Age must be greater than 0")
+        .withMessage("Age must be greater than 0"),
+
+    body("password")
+        .isLength({ min: 6 })
+        .withMessage("Password must be at least 6 characters long")
 ];
 
 

@@ -1,0 +1,15 @@
+const express = require("express"); // express directly imported from node_modules
+const router = express.Router(); // router in imported from express to create a router instance
+
+const { register, login } = require("../controllers/authController");
+const { createUserValidation } = require("../validators/userValidator");
+const validate = require("../middleware/validationMiddleware");
+
+
+router.post("/register", createUserValidation, validate, register);
+
+router.post("/login",  login);
+
+
+
+module.exports = router;

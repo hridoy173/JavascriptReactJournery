@@ -1,25 +1,26 @@
 const express = require("express"); // express directly imported from node_modules
 const router = express.Router(); // router in imported from express to create a router instance
 
-const { createUserValidation } = require("../validators/userValidator");
-const validate = require("../middleware/validationMiddleware");
+const {protect} = require("../middleware/authMiddleware");
+
 const { getUsers, createUser, userUpdate, userDelete} = require("../controllers/userController");
 
 
 
-router.get("/",  getUsers);
 
-router.post(
-    "/",
-    createUserValidation,
-    validate,
-    createUser
-);
+router.get("/", protect, getUsers);
+
+// router.post(
+//     "/",
+//     createUserValidation,
+//     validate,
+//     createUser
+// );
 
 
-router.put("/:id", userUpdate);
+router.put("/:id", protect, userUpdate);
 
-router.delete("/:id", userDelete);
+router.delete("/:id", protect, userDelete);
 
 
 module.exports = router;
