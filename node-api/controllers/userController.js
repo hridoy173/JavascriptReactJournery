@@ -1,6 +1,8 @@
 
 const User = require("../models/User");
 
+
+
 // create user model method 1
 const createUser = async (req, res) => {
 

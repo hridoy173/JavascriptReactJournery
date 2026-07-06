@@ -1,24 +1,49 @@
-const express = require("express");
-const router = express.Router();
+const express = require("express"); // express directly imported from node_modules
+const router = express.Router(); // router in imported from express to create a router instance
+
+const { createUserValidation } = require("../validators/userValidator");
+const validate = require("../middleware/validationMiddleware");
+const { getUsers, createUser, userUpdate, userDelete} = require("../controllers/userController");
 
 
 
-const { getUsers, createUser, userUpdate, userDelete} = require("./../controllers/userController");
+router.get("/",  getUsers);
 
-router.get("/", getUsers);
+router.post(
+    "/",
+    createUserValidation,
+    validate,
+    createUser
+);
 
-router.post("/users", createUser);
 
 router.put("/:id", userUpdate);
 
 router.delete("/:id", userDelete);
 
 
+module.exports = router;
+
+
+
+
+
+
+
+
+/// old code ///
+
+// router.post("/", 
+//             body("name").notEmpty().withMessage("Name is required"),
+//             body("email").isEmail().withMessage("Please provide a valid email"),
+//             body("age").isInt({ min: 0 }).withMessage("Age must be a positive integer"),
+//             createUser);
+
 
 // GET All Users
 // router.get("/", (req, res) => {
-//     res.json(users);
-// });
+    //     res.json(users);
+    // });
 
 
 // POST User
@@ -57,5 +82,3 @@ router.delete("/:id", userDelete);
 
 
 
-
-module.exports = router;
