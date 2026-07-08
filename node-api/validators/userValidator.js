@@ -1,6 +1,7 @@
 const { body } = require("express-validator");
 
 const createUserValidation = [
+    
     body("name")
         .notEmpty()
         .withMessage("Name is required"),

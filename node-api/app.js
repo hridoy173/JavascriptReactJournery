@@ -3,21 +3,27 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const cors = require("cors");
-
-
 app.use(express.json());
-// app.use(cors());
-app.use(cors({
-    origin: "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-}
-));
 
+// const cors = require("cors");
+
+// app.use(cors());
+// app.use(cors({
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+// }
+// ));
+
+
+
+// auth routes
+app.use("/api/auth", require("./routes/authRoutes"));
 
 // user routes
 app.use("/users", require("./routes/userRoutes"));
+
+
 
 module.exports = app;
 

@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs");
 
 
 const register = async (req, res) => {
-    try {
 
+    try {
+        
         const { name, email, age , password } = req.body;
 
         // Email already exists?
@@ -36,9 +37,9 @@ const register = async (req, res) => {
 
         return res.status(500).json({
             success: false,
-            message: error.message
-        });
-
+            message: error.message,
+            stack: error.stack 
+            });
     }
 };
 

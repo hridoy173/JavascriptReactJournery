@@ -3,7 +3,7 @@ const router = express.Router(); // router in imported from express to create a 
 
 const { register, login } = require("../controllers/authController");
 const { createUserValidation } = require("../validators/userValidator");
-const validate = require("../middleware/validationMiddleware");
+const { validate } = require("../middleware/validationMiddleware");
 
 
 router.post("/register", createUserValidation, validate, register);
