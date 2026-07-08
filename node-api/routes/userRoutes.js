@@ -2,13 +2,15 @@ const express = require("express"); // express directly imported from node_modul
 const router = express.Router(); // router in imported from express to create a router instance
 
 const {protect} = require("../middleware/authMiddleware");
+const errorHandler = require("../middleware/errorMiddleware");
+
 
 const { getUsers, createUser, userUpdate, userDelete} = require("../controllers/userController");
 
 
 
 
-router.get("/", protect, getUsers);
+router.get("/", protect, errorHandler, getUsers);
 
 // router.post(
 //     "/",

@@ -1,5 +1,6 @@
 
 const User = require("../models/User");
+const errorHandler = require("../middleware/errorMiddleware");
 
 
 
@@ -36,7 +37,7 @@ const createUser = async (req, res) => {
 
 
 //get all users
-const getUsers =  async (req, res) => {
+const getUsers =  async (req, res, next) => {
     try {
         const users = await User.find()
         // .populate(1) // like to laravel with() function
@@ -45,7 +46,7 @@ const getUsers =  async (req, res) => {
         .select("-password");
         res.json(users);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+         next(error);
     }
 };
 
