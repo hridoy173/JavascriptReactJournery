@@ -1,6 +1,8 @@
 const User = require("../models/User");
 const generateToken = require("../utils/generateToken");
+const ApiError = require("../utils/ApiError");
 const bcrypt = require("bcryptjs");
+const asyncHandler = require("../middleware/asyncHandler");
 
 
 const register = async (req, res) => {
@@ -45,53 +47,47 @@ const register = async (req, res) => {
 
 
 
-const login = async (req, res) => {
+const login =  asyncHandler (
 
-    try {
+    async (req, res) => {
+    
+    
+            const { email, password } = req.body;
+    
+            const user = await User.findOne({ email }).
+            select("+password");
 
-        const { email, password } = req.body;
-
-        const user = await User.findOne({ email });
-
-        if (!user) {
-
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
+    
+            if (!user) {
+                throw new ApiError(
+                    404,
+                    "User not found"
+                );
+            }
+    
+            const isMatch = await bcrypt.compare(
+                password,
+                user.password
+            );
+    
+            if (!isMatch) {
+    
+                throw new ApiError(
+                    401,
+                    "Invalid email or password"
+                );
+            }
+    
+            return res.status(200).json({
+                success: true,
+                token: generateToken(user._id),
+                user
             });
-
-        }
-
-        const isMatch = await bcrypt.compare(
-            password,
-            user.password
-        );
-
-        if (!isMatch) {
-
-            return res.status(401).json({
-                success: false,
-                message: "Invalid email or password"
-            });
-
-        }
-
-        return res.status(200).json({
-            success: true,
-            token: generateToken(user._id),
-            user
-        });
-
-    } catch (error) {
-
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
-
+    
     }
 
-};
+);
+
 
 
 

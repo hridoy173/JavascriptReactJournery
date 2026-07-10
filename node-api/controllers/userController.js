@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const errorHandler = require("../middleware/errorMiddleware");
 const asyncHandler = require("../middleware/asyncHandler");
+const ApiError = require("../utils/ApiError");
 
 
 
