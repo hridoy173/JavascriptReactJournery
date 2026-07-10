@@ -1,13 +1,15 @@
 
 const User = require("../models/User");
 const errorHandler = require("../middleware/errorMiddleware");
+const asyncHandler = require("../middleware/asyncHandler");
+
 
 
 
 // create user model method 1
-const createUser = async (req, res) => {
+const createUser = asyncHandler (
 
-    try {
+async (req, res) => {
 
         const user = await User.create(req.body);
 
@@ -16,15 +18,8 @@ const createUser = async (req, res) => {
             data: user
         });
 
-    } catch (error) {
+});
 
-        return res.status(500).json({
-            success: false,
-            message: error.message
-        });
-
-    }
-};
 
 // create user model method 2
 // const user = new User({
@@ -37,27 +32,38 @@ const createUser = async (req, res) => {
 
 
 //get all users
-const getUsers =  async (req, res, next) => {
-    try {
-        const users = await User.find()
-        // .populate(1) // like to laravel with() function
-        // .limit(1)
-        // .sort({ createdAt: -1 });
-        .select("-password");
-        res.json(users);
-    } catch (error) {
-         next(error);
-    }
-};
+// const getUsers =  async (req, res, next) => {
+//     try {
+//         const users = await User.find();
+//         // .populate(1) // like to laravel with() function
+//         // .limit(1)
+//         // .sort({ createdAt: -1 });
+//         // .select("-password");
+//         res.json(users);
+//     } catch (error) {
+//          next(error);
+//     }
+// };
 
+
+const getUsers = asyncHandler(async (req, res) => {
+
+    const users = await User.find();
+
+    res.status(200).json({
+        success: true,
+        data: users
+    });
+
+});
 
 
 // update user
-const userUpdate = async (req, res) => {
+const userUpdate = asyncHandler( async (req, res) => {
+
     const { id } = req.params;
     const { name, email, age } = req.body;
 
-    try {
         const user = await User.findByIdAndUpdate(
         id,
         { name, email, age },
@@ -75,24 +81,20 @@ const userUpdate = async (req, res) => {
             data: user
         });
 
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+    });
 
 
 
 // delete user
-const userDelete = async (req, res) => {
+const userDelete = asyncHandler( async (req, res) => {
+
     const { id } = req.params;
 
-    try {
-        const user = await User.findByIdAndDelete(id);
-        res.json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
+    const user = await User.findByIdAndDelete(id);
+    res.json(user);
+});
+
+
 
 
 module.exports = {
