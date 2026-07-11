@@ -1,28 +1,18 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const ApiError = require("../utils/ApiError");
+const asyncHandler = require("./asyncHandler");
 
-const protect = async (req, res, next) => {
-
-    try {
+const protect = asyncHandler (async (req, res, next) => {
 
         const authHeader = req.headers.authorization;
 
         if (!authHeader) {
-
-            return res.status(401).json({
-                success: false,
-                message: "Authorization header missing"
-            });
-
+            throw new ApiError(401, "Authorization header missing");
         }
 
         if (!authHeader.startsWith("Bearer ")) {
-
-            return res.status(401).json({
-                success: false,
-                message: "Invalid authorization format"
-            });
-
+          throw new ApiError(401, "Invalid authorization header format");
         }
 
         const token = authHeader.split(" ")[1];
@@ -36,28 +26,14 @@ const protect = async (req, res, next) => {
             .select("-password");
 
         if (!user) {
-
-            return res.status(401).json({
-                success: false,
-                message: "User not found"
-            });
-
+          throw new ApiError(401, "User not found");
         }
 
         req.user = user;
 
         next();
 
-    } catch (error) {
-
-        return res.status(401).json({
-            success: false,
-            message: "Invalid or expired token"
-        });
-
-    }
-
-};
+});
 
 module.exports = {
     protect

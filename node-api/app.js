@@ -1,10 +1,9 @@
 
 require("dotenv").config();
-
 const express = require("express");
 const app = express();
-
 const errorHandler = require("./middleware/errorMiddleware");
+
 app.use(express.json());
 
 // const cors = require("cors");
@@ -28,6 +27,7 @@ app.use("/users", require("./routes/userRoutes"));
 
 
 app.use(errorHandler);
+
 module.exports = app;
 
 

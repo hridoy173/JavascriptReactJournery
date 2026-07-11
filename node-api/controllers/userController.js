@@ -3,19 +3,19 @@ const User = require("../models/User");
 const errorHandler = require("../middleware/errorMiddleware");
 const asyncHandler = require("../middleware/asyncHandler");
 const ApiError = require("../utils/ApiError");
+const successResponse = require("../utils/apiResponse");
 
 
 
 
 // create user model method 1
-const createUser = asyncHandler (
-
-async (req, res) => {
-
+const createUser = asyncHandler ( async (req, res) => 
+{
         const user = await User.create(req.body);
 
-        return res.status(201).json({
-            success: true,
+        return successResponse(res, {
+            statusCode: 201,
+            message: "User created successfully",
             data: user
         });
 
@@ -51,8 +51,8 @@ const getUsers = asyncHandler(async (req, res) => {
 
     const users = await User.find();
 
-    res.status(200).json({
-        success: true,
+    return successResponse(res, {
+        message: "Users retrieved successfully",
         data: users
     });
 
@@ -72,13 +72,11 @@ const userUpdate = asyncHandler( async (req, res) => {
         );
 
         if (!user) {
-            return res.status(404).json({
-                message: "User not found"
-            });
+            throw new ApiError(404, "User not found");
         }
 
-        res.status(200).json({
-            success: true,
+        return successResponse(res, {
+            message: "User updated successfully",
             data: user
         });
 
@@ -92,7 +90,11 @@ const userDelete = asyncHandler( async (req, res) => {
     const { id } = req.params;
 
     const user = await User.findByIdAndDelete(id);
-    res.json(user);
+
+    return successResponse(res, {
+        message: "User deleted successfully",
+        data: user
+    });
 });
 
 
