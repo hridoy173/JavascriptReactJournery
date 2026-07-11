@@ -3,6 +3,7 @@ const successResponse = (
     {
         statusCode = 200,
         message = "Success",
+        token = null,
         data = null,
         meta = null
     } = {}
@@ -11,6 +12,7 @@ const successResponse = (
     return res.status(statusCode).json({
         success: true,
         message,
+        token,
         data,
         meta
     });
