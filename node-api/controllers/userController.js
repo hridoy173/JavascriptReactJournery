@@ -53,14 +53,15 @@ const createUser = asyncHandler ( async (req, res) =>
 // refactored getUsers with pagination, search, filter and sort using QueryBuilder class
 const getUsers = asyncHandler(async (req, res) => {
 
-    const queryBuilder = new QueryBuilder(User.find(), req.query)
-        .search(["name", "email" , "age"])
+    const queryBuilder = await new QueryBuilder(User, req.query)
+        .search(["name", "email"])
         .filter()
-        .paginate();
+        .paginate()
+        .execute();
 
     return successResponse(res, {
         message: "Users fetched successfully",
-        data: await queryBuilder.query
+        ...queryBuilder
     });
 });
 

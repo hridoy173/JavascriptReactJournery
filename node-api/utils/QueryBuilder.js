@@ -1,10 +1,15 @@
 class QueryBuilder {
 
-    constructor(query, queryString) {
-        this.query = query;
+    constructor(model, queryString) {
+        this.model = model;
+        this.query = model.find();
         this.queryString = queryString;
+        this.page = Number(queryString.page) || 1;
+        this.limit = Number(queryString.limit) || 10;
     }
 
+
+    // search method to search for users by name or email
     search(fields = []) {
 
         const search = this.queryString.search;
@@ -29,6 +34,7 @@ class QueryBuilder {
 
 
 
+    // filter method to filter users by age or email
     filter() {
 
         const queryObj = { ...this.queryString };
@@ -50,6 +56,9 @@ class QueryBuilder {
 
     }
 
+
+    // paginate method to paginate users
+
     paginate() {
         const page = Number(this.queryString.page) || 1;
         const limit = Number(this.queryString.limit) || 10;
@@ -62,6 +71,41 @@ class QueryBuilder {
 
         return this;
     }
+
+
+      
+async execute() {
+
+    const data = await this.query;
+    const total = await this.model.countDocuments();
+
+    return {
+
+        data,
+
+        meta: {
+
+            page: this.page,
+
+            limit: this.limit,
+
+            total,
+
+            totalPages: Math.ceil(total / this.limit),
+
+            count: data.length,
+
+            hasNextPage:
+                this.page < Math.ceil(total / this.limit),
+
+            hasPrevPage:
+                this.page > 1
+
+        }
+
+    };
+
+}
 
 }
 
