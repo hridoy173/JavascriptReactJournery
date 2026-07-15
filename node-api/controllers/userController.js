@@ -56,6 +56,7 @@ const getUsers = asyncHandler(async (req, res) => {
     const queryBuilder = await new QueryBuilder(User, req.query)
         .search(["name", "email"])
         .filter()
+        .sort()
         .paginate()
         .execute();
 

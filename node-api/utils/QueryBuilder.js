@@ -33,6 +33,16 @@ class QueryBuilder {
     }
 
 
+    sort() {
+
+        const sort = this.queryString.sort || "-createdAt";
+
+        this.query = this.query.sort(sort);
+
+        return this;
+    }
+
+
 
     // filter method to filter users by age or email
     filter() {
