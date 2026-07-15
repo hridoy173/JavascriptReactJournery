@@ -9,7 +9,9 @@ const validate = (req, res, next) => {
     if (!errors.isEmpty()) {
         return res.status(400).json({
             success: false,
-            errors: errors.array(),
+            message: "Validation Error",
+            errors: errors.mapped(),
+            // errors: errors.array(),
         });
     }
 

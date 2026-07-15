@@ -6,7 +6,18 @@ const { createUserValidation } = require("../validators/userValidator");
 const { validate } = require("../middleware/validationMiddleware");
 
 
-router.post("/register", createUserValidation, validate, register);
+// router.post("/register", createUserValidation, validate, register);
+
+const validateRequest = require("../middleware/validateRequest");
+const { createUserSchema } = require("../validators/user.validation");
+
+
+
+router.post(
+    "/register",
+    validateRequest(createUserSchema),
+    register
+);
 
 router.post("/login",  login);
 
