@@ -1,3 +1,5 @@
+const  formatValidationErrors = require("../utils/formatValidationErrors");
+
 const validateRequest = (schema) => {
 
     return (req, res, next) => {
@@ -15,7 +17,7 @@ const validateRequest = (schema) => {
             return res.status(400).json({
                 success: false,
                 message: "Validation Error",
-                errors: error.issues
+                errors: formatValidationErrors(error.issues)
             });
 
         }
